@@ -1,10 +1,12 @@
 package post
 
 import (
+	"fmt"
 	"gin-project/mysql"
 	"gin-project/mysql/dao"
 	"gin-project/mysql/models"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"time"
 )
@@ -44,13 +46,13 @@ func CreateUserInfo(c *gin.Context) {
 		UpdatedTime:  time.Now().Unix(),
 		IsDeleted:    userInfo.IsDeleted,
 	}); err != nil {
+		log.Println(fmt.Sprintf("create user err [%v]", err))
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	} else {
+		// 返回 JSON 响应
+		c.JSON(http.StatusOK, gin.H{
+			"message": "User create successful",
+			"user":    userInfo,
+		})
 	}
-
-	// 返回 JSON 响应
-	c.JSON(http.StatusOK, gin.H{
-		"message": "User create successful",
-		"user":    userInfo,
-	})
 }

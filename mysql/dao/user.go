@@ -28,7 +28,7 @@ func GetUserListById(db *gorm.DB, id int64) (err error, users []*models.User) {
 // CreateUser 创建用户的数据
 func CreateUser(db *gorm.DB, user *models.User) (err error) {
 	if err = db.Table((&models.User{}).Table()).Create(user).Error; err != nil {
-		log.Fatalf("save user error [%v]", err)
+		log.Printf("save user error [%v]", err)
 	}
 
 	return err
